@@ -1,15 +1,37 @@
 <header>
-	<% if (locals.user) { %>
-	<nav class="navbar navbar-dark bg-dark">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="/">Placement Cell</a>
-			<a class="navbar-brand" href="/">Welcome <%=locals.user.name%></a>
-			<form class="d-flex px-4">
-				<a class="navbar-brand p-2" href="/company/home">Company List</a>
-				<a class="navbar-brand p-2" href="/users/download-csv">Download Report</a>
-				<a class="navbar-brand p-2" href="/users/signout" style="background-color: red; border-radius: 5px">Sign out</a>
-			</form>
-		</div>
-	</nav>
-	<% } %>
+  <% if (locals.user) { %>
+  <nav class="navbar navbar-dark bg-transparent">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/" style="color: black; font-size: 35px"
+        ><b>Placement Cell</b></a
+      >
+      <a
+        class="navbar-brand"
+        href="/"
+        style="position: relative; left: 220px; color: blue"
+        >Hello! <%=locals.user.name%></a
+      >
+      <form class="d-flex px-4 py-2">
+        <a
+          class="navbar-brand p-2"
+          href="/company/home"
+          style="background-color: #008cba; border-radius: 5px; font-size: 18px"
+          >Interview Details</a
+        >
+        <a
+          class="navbar-brand p-2"
+          href="/users/download-csv"
+          style="background-color: green; border-radius: 5px; font-size: 18px"
+          >Download Report</a
+        >
+        <a
+          class="navbar-brand p-2"
+          href="/users/signout"
+          style="background-color: #f44336; border-radius: 5px; font-size: 18px"
+          >Sign out</a
+        >
+      </form>
+    </div>
+  </nav>
+  <% } %>
 </header>

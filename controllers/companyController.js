@@ -1,14 +1,15 @@
-const Student = require('../models/studentSchema');
-const Company = require('../models/companySchema');
+const Student = require("../models/studentSchema");
+const Company = require("../models/companySchema");
 
 // render company page
 module.exports.companyPage = async function (req, res) {
   try {
     const students = await Student.find({});
-    return res.render('company', { students });
+    return res.render("company", { students });
   } catch (error) {
     console.log(`Error in rendering page: ${error}`);
-    return res.redirect('back');
+    req.flash("error", "Error in rendering the page!");
+    return res.redirect("back");
   }
 };
 
@@ -25,10 +26,11 @@ module.exports.allocateInterview = async function (req, res) {
     // filter out duplicate batches
     array = [...new Set(array)];
 
-    return res.render('allocateInterview', { students, array });
+    return res.render("allocateInterview", { students, array });
   } catch (error) {
     console.log(`Error in allocating interview: ${error}`);
-    return res.redirect('back');
+    req.flash("error", "Error in allocating interview");
+    return res.redirect("back");
   }
 };
 
@@ -40,7 +42,7 @@ module.exports.scheduleInterview = async function (req, res) {
     const obj = {
       student: id,
       date,
-      result: 'Pending',
+      result: "Pending",
     };
     // if company doesnt exist
     if (!existingCompany) {
@@ -53,8 +55,12 @@ module.exports.scheduleInterview = async function (req, res) {
       for (let student of existingCompany.students) {
         // if student id already exists
         if (student.student._id === id) {
-          console.log('Interview with this student already scheduled');
-          return res.redirect('back');
+          console.log("Interview with this student already scheduled");
+          req.flash(
+            "error",
+            "Interview with this student is already scheduled!"
+          );
+          return res.redirect("back");
         }
       }
       existingCompany.students.push(obj);
@@ -67,16 +73,18 @@ module.exports.scheduleInterview = async function (req, res) {
       const interview = {
         company,
         date,
-        result: 'Pending',
+        result: "Pending",
       };
       student.interviews.push(interview);
       student.save();
     }
-    console.log('Interview Scheduled Successfully');
-    return res.redirect('/company/home');
+    // console.log("Interview Scheduled Successfully");
+    req.flash("success", "Interview Scheduled Successfully!");
+    return res.redirect("/company/home");
   } catch (error) {
-    console.log(`Error in scheduling Interview: ${error}`);
-    return res.redirect('back');
+    // console.log(`Error in scheduling Interview: ${error}`);
+    req.flash("error", "Error in scheduling Interview!");
+    return res.redirect("back");
   }
 };
 
@@ -106,10 +114,12 @@ module.exports.updateStatus = async function (req, res) {
         }
       }
     }
-    console.log('Interview Status Changed Successfully');
-    return res.redirect('back');
+    // console.log("Interview Status Changed Successfully");
+    req.flash("success", "Interview Status Changed Successfully!");
+    return res.redirect("back");
   } catch (error) {
     console.log(`Error in updating status: ${error}`);
-    res.redirect('back');
+    req.flash("error", "Error in updating status!");
+    res.redirect("back");
   }
 };

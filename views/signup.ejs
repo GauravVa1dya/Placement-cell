@@ -4,24 +4,41 @@
     <%- include('_bootstrap_meta')%>
     <title>Sign Up</title>
   </head>
-  <body style="background-color: #e6e9e9">
+  <body style="
+  background: url('https://img.freepik.com/free-vector/paper-style-white-monochrome-background_23-2149003153.jpg?w=996&t=st=1713244837~exp=1713245437~hmac=91b0e43b3525be2d122de3e11653b0d3dc926f666df6a4a5f697dd28089b0584');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  padding-top: 20px;
+  font-family: monospace;
+">
       <%- include('_header')%>
-    <div class="w-50 mx-auto mt-5" style="display: grid; place-content: center; width: 530px; background: white;
+      <div class="container">
+        
+
+    <div class="w-50 mx-auto mt-5" style="display: grid; place-content: center; width: 530px; background: transparent;
     border-radius: 5px;
     box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.05);">
       <div class="mx-auto mt-3 mb-4" style="width: 100px">
         <h4>Sign Up</h4>
       </div>
-      <div class="mb3">
+      <!-- Display flash messages -->
+      <% if (success_msg && success_msg.length > 0) { %>
+        <div class="alert alert-success"><%= success_msg %></div>
+        <% } %>
+        <% if (error_msg && error_msg.length > 0) { %>
+          <div class="alert alert-danger"><%= locals.error_msg %></div>
+          <% } %>
+      <div class="mb-3">
         <form action="/users/create" method="post" >
 
           <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="John Doe" required/>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name..." required/>
         </div>
 
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="abc@email.com" name="email" required />
+          <input type="email" class="form-control" id="email" placeholder="Enter your email..." name="email" required />
         </div>
 
         <div class="mb-3">
@@ -37,8 +54,9 @@
           <button type="submit" class="btn btn-success btn-block mb-4">Sign Up</button>
         </div>
       </form>
-      <div class="mx-auto mb-3 mt-3" style="width: 300px">
+      <div class="mx-auto mb-3" style="width: 300px">
         <a href="/users/signin" style="margin-left: 100px">Log in Instead</a>
+      </div>
       </div>
       </div>
     <%- include('_bootstrap_script')%>
